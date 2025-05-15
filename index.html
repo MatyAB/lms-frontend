@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>HTML Tutorial - W3Schools Clone</title>
+  <title>Siinqee Bank - Online Banking Tutorial</title>
   <style>
     /* Reset & base */
     * {
@@ -15,176 +15,129 @@
       font-family: Arial, Helvetica, sans-serif;
       background: #fff;
       color: #333;
-      height: 100vh;
-      overflow: hidden;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
     a {
+      color: #04AA6D;
       text-decoration: none;
-      color: #1a73e8;
     }
     a:hover {
       text-decoration: underline;
     }
 
-    /* Container flex layout */
-    .container {
+    /* Header (top bar) */
+    header.header {
+      background-color: #04AA6D;
+      color: white;
+      padding: 12px 20px;
       display: flex;
-      height: 100vh;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 18px;
+      height: 48px;
+      user-select: none;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+    header.header .logo {
+      font-weight: 700;
+      font-size: 20px;
+    }
+    header.header button.toggle-sidebar {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      line-height: 1;
+      user-select: none;
+    }
+
+    /* Container: sidebar + main */
+    .container {
+      flex-grow: 1;
+      display: flex;
       overflow: hidden;
-      background: #fff;
+      background: white;
     }
 
     /* Sidebar */
     nav.sidebar {
-      width: 250px;
-      background: #f9f9f9;
+      background-color: #f3f3f3;
+      width: 260px;
+      min-width: 260px;
       border-right: 1px solid #ddd;
       display: flex;
       flex-direction: column;
       overflow-y: auto;
-      font-size: 14px;
-      padding: 20px 15px;
+      transition: width 0.3s ease;
     }
+    nav.sidebar.minimized {
+      width: 60px;
+      min-width: 60px;
+    }
+
     nav.sidebar h2 {
       font-size: 18px;
-      margin-bottom: 1rem;
-      font-weight: bold;
+      padding: 20px 15px 15px 15px;
       color: #333;
+      font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
+
     nav.sidebar ul {
-      list-style: none;
+      list-style-type: none;
       padding-left: 0;
       margin: 0;
-    }
-    nav.sidebar li {
-      margin-bottom: 12px;
-    }
-    nav.sidebar li a {
-      color: #333;
-      font-weight: 500;
-      display: block;
-      padding: 6px 8px;
-      border-radius: 4px;
-      transition: background-color 0.2s;
-    }
-    nav.sidebar li a:hover,
-    nav.sidebar li a.active {
-      background-color: #e1eefd;
-      color: #1a73e8;
-    }
-
-    /* Main content area */
-    main.content {
       flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-      overflow-y: auto;
-      padding: 20px 35px;
-      color: #222;
     }
 
-    /* Header area */
-    header.page-header {
-      margin-bottom: 20px;
-      border-bottom: 1px solid #ddd;
-      padding-bottom: 12px;
+    nav.sidebar ul li {
+      padding: 12px 20px;
     }
-    header.page-header h1 {
-      font-size: 28px;
-      font-weight: 700;
-      margin: 0;
+    nav.sidebar ul li:hover {
+      background-color: #dff0e8;
+    }
+    nav.sidebar ul li a {
       color: #111;
-    }
-    .green-label {
-      display: inline-block;
-      background-color: #4CAF50;
-      color: white;
       font-weight: 600;
-      font-size: 12px;
-      padding: 3px 8px;
-      border-radius: 12px;
-      margin-bottom: 15px;
-    }
-
-    /* Sections */
-    section {
-      margin-bottom: 40px;
-    }
-    section h2 {
-      font-weight: 600;
-      font-size: 22px;
-      margin-bottom: 12px;
-      color: #222;
-    }
-    section p,
-    section li {
-      font-size: 15px;
-      line-height: 1.5;
-      color: #444;
-    }
-
-    /* Code blocks */
-    pre {
-      background: #f4f4f4;
-      border: 1px solid #ddd;
-      padding: 15px 20px;
-      border-radius: 4px;
-      overflow-x: auto;
-      font-family: 'Courier New', Courier, monospace;
-      font-size: 14px;
-      margin-top: 12px;
-      margin-bottom: 12px;
-    }
-    code {
-      font-family: 'Courier New', Courier, monospace;
-    }
-
-    /* Buttons */
-    .btn {
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      padding: 10px 18px;
-      border-radius: 4px;
-      font-weight: 600;
-      font-size: 14px;
-      cursor: pointer;
-      display: inline-block;
-      margin-top: 15px;
-      text-align: center;
-      user-select: none;
-      transition: background-color 0.3s;
-    }
-    .btn:hover {
-      background-color: #45a047;
-    }
-
-    /* Quiz progress bar container */
-    .progress-container {
-      margin-top: 15px;
-      background: #eee;
-      border-radius: 20px;
-      width: 100%;
-      height: 18px;
+      display: block;
+      white-space: nowrap;
       overflow: hidden;
+      text-overflow: ellipsis;
+      transition: color 0.2s ease;
     }
-    .progress-bar {
-      height: 18px;
-      background-color: #4CAF50;
-      width: 40%; /* example progress */
-      transition: width 0.4s ease;
+    nav.sidebar.minimized ul li a {
+      text-align: center;
+      padding: 0;
+      font-size: 24px;
+      display: block;
     }
-
-    /* Sections with cards or boxes */
-    .card {
-      background: #f9f9f9;
-      border-radius: 6px;
-      border: 1px solid #ddd;
-      padding: 15px 20px;
-      margin-top: 12px;
+    nav.sidebar ul li a.active,
+    nav.sidebar ul li a:hover {
+      color: #04AA6D;
     }
 
-    /* Sidebar scroll shadow */
+    /* Sidebar icons for minimized mode (replace with Unicode icons for demo) */
+    nav.sidebar.minimized ul li a[data-icon]:before {
+      content: attr(data-icon);
+      display: inline-block;
+      margin-right: 0;
+      font-weight: 700;
+    }
+    nav.sidebar.minimized h2 {
+      padding-left: 0;
+      text-align: center;
+    }
+
+    /* Scrollbar styling */
     nav.sidebar::-webkit-scrollbar {
       width: 8px;
     }
@@ -193,152 +146,356 @@
       border-radius: 4px;
     }
 
-    /* Ads placeholders as boxes */
+    /* Main content */
+    main.content {
+      flex-grow: 1;
+      overflow-y: auto;
+      padding: 20px 40px;
+      background-color: #fff;
+      color: #222;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    /* Sections */
+    section {
+      margin-bottom: 40px;
+      max-width: 900px;
+      width: 100%;
+    }
+    section h2 {
+      font-weight: 700;
+      font-size: 28px;
+      margin-bottom: 16px;
+      color: #04AA6D;
+    }
+    section p, section li {
+      font-size: 16px;
+      line-height: 1.6;
+      color: #444;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-block;
+      background-color: #04AA6D;
+      color: white;
+      font-weight: 600;
+      padding: 10px 20px;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      user-select: none;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+      margin-top: 15px;
+      text-align: center;
+      text-decoration: none;
+    }
+    .btn:hover {
+      background-color: #038c56;
+    }
+
+    /* Code blocks */
+    pre {
+      background-color: #f4f4f4;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 15px 20px;
+      overflow-x: auto;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 14px;
+      margin-top: 12px;
+      margin-bottom: 12px;
+      white-space: pre-wrap;
+    }
+    
+    /* Table Styling */
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 15px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px 15px;
+      text-align: left;
+    }
+    th {
+      background-color: #e7f5ef;
+    }
+    
+    /* Quiz progress bar */
+    .progress-container {
+      margin-top: 15px;
+      background: #ddd;
+      border-radius: 20px;
+      overflow: hidden;
+      width: 100%;
+      height: 20px;
+    }
+    .progress-bar {
+      height: 100%;
+      background-color: #04AA6D;
+      width: 40%;  /* example */
+      transition: width 0.3s ease;
+    }
+    
+    /* Cards */
+    .card {
+      background-color: #f9f9f9;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    /* Ad placeholders */
     .ad-placeholder {
-      margin: 20px 0;
-      background: #ededed;
-      border: 2px dashed #ccc;
-      color: #666;
-      font-size: 13px;
+      background: #eee;
+      border: 2px dashed #bbb;
+      color: #999;
       text-align: center;
       line-height: 50px;
+      font-size: 14px;
       border-radius: 6px;
+      margin: 20px 0;
       user-select: none;
     }
 
-    /* Inline images */
-    .inline-image {
+    /* Video preview area on top */
+    #video-tutorial {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    #video-tutorial img {
       max-width: 100%;
-      display: block;
-      margin: 15px 0;
       border-radius: 6px;
-      border: 1px solid #ddd;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+      cursor: pointer;
+      max-height: 320px;
+      object-fit: cover;
+      user-select: none;
+      border: 1px solid #ccc;
+    }
+    #video-tutorial h2 {
+      margin-top: 24px;
+      margin-bottom: 12px;
+      color: #04AA6D;
+    }
+    #video-tutorial p {
+      font-size: 16px;
+      color: #555;
+      margin-bottom: 0;
     }
 
-    /* Responsive adjustments */
-    @media (max-width: 900px) {
+    /* Footer (bottom bar) */
+    footer.footer {
+      background-color: #222;
+      color: #bbb;
+      font-size: 14px;
+      padding: 20px 40px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 15px;
+      user-select: none;
+    }
+    footer.footer a {
+      color: #04AA6D;
+      text-decoration: none;
+      margin-right: 20px;
+      white-space: nowrap;
+    }
+    footer.footer a:hover {
+      text-decoration: underline;
+    }
+    footer.footer .col {
+      min-width: 120px;
+      flex-grow: 1;
+    }
+    footer.footer .copyright {
+      flex-basis: 100%;
+      text-align: center;
+      margin-top: 12px;
+      color: #777;
+    }
+
+    /* Responsive for smaller windows */
+    @media (max-width: 860px) {
       nav.sidebar {
         display: none;
       }
+      header.header button.toggle-sidebar {
+        display: none;
+      }
       main.content {
-        padding: 15px 20px;
+        padding: 20px;
+      }
+      footer.footer {
+        padding: 20px;
+        justify-content: center;
+        gap: 10px;
       }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <!-- Sidebar Navigation -->
-    <nav class="sidebar" aria-label="Main Navigation">
-      <h2>HTML Tutorial</h2>
+
+  <!-- HEADER -->
+  <header class="header" role="banner">
+    <div class="logo" aria-label="Siinqee Bank Logo">Siinqee Bank</div>
+    <button class="toggle-sidebar" aria-label="Toggle Sidebar" title="Toggle Sidebar">&#9776;</button>
+  </header>
+
+  <!-- CONTAINER -->
+  <div class="container" role="main">
+
+    <!-- SIDEBAR -->
+    <nav class="sidebar" aria-label="Primary Navigation">
+      <h2>Siinqee Bank</h2>
       <ul>
-        <li><a href="#" class="active">Home</a></li>
-        <li><a href="#">Learn HTML</a></li>
-        <li><a href="#">HTML Examples</a></li>
-        <li><a href="#">HTML Exercises</a></li>
-        <li><a href="#">HTML Quiz Test</a></li>
-        <li><a href="#">HTML References</a></li>
-        <li><a href="#">HTML Certification</a></li>
+        <li><a href="#" class="active" data-icon="🏠" title="Home">Home</a></li>
+        <li><a href="#" data-icon="💳" title="Accounts & Cards">Accounts & Cards</a></li>
+        <li><a href="#" data-icon="📊" title="Investments">Investments</a></li>
+        <li><a href="#" data-icon="📞" title="Customer Support">Customer Support</a></li>
+        <li><a href="#" data-icon="📰" title="Latest Offers">Latest Offers</a></li>
+        <li><a href="#" data-icon="🎓" title="Banking Education">Education</a></li>
       </ul>
-      <div class="ad-placeholder" style="height:90px;">Ad Placeholder 1</div>
-      <div class="ad-placeholder" style="height:250px;">Ad Placeholder 2</div>
+      <div class="ad-placeholder" style="height:90px;">Advertisement</div>
+      <div class="ad-placeholder" style="height:250px;">Advertisement</div>
     </nav>
 
-    <!-- Main Content -->
-    <main class="content" role="main" tabindex="0">
-      <header class="page-header">
-        <div class="green-label">Tutorial</div>
-        <h1>HTML Tutorial</h1>
-      </header>
+    <!-- MAIN CONTENT -->
+    <main class="content" tabindex="0" aria-label="Main content area">
 
-      <section id="learn-html">
-        <h2>Learn HTML</h2>
-        <p>HTML is the standard markup language for Web pages.</p>
-        <p>With HTML you can create your own Website.</p>
-        <button class="btn" onclick="alert('Start Learning!')">Start learning HTML</button>
+      <!-- Video Section on top -->
+      <section id="video-tutorial">
+        <h2>Welcome to Siinqee Bank Online Banking Tutorial</h2>
+        <img src="https://i.imgur.com/Iy4YV8B.png" alt="Online banking tutorial video thumbnail" role="button" tabindex="0" aria-label="Play Online Banking Tutorial Video" />
+        <p>Learn how to securely manage your finances online with Siinqee Bank’s user-friendly platform.</p>
+      </section>
+
+      <section id="learn-banking">
+        <h2>Learn About Siinqee Bank Services</h2>
+        <p>Discover the wide range of financial products and services designed to suit your needs.</p>
+        <p>From savings accounts to investment options — manage everything with ease.</p>
+        <button class="btn" onclick="alert('Getting Started with Siinqee Bank')">Get Started</button>
       </section>
 
       <section id="easy-learning">
-        <h2>Easy Learning with HTML - Try it Yourself!</h2>
-        <p>Try the "Try it Yourself" editor to edit and test each example yourself.</p>
-        <pre><code>&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;body&gt;
-
-&lt;h1&gt;My First Heading&lt;/h1&gt;
-&lt;p&gt;My first paragraph.&lt;/p&gt;
-
-&lt;/body&gt;
-&lt;/html&gt;</code></pre>
-        <a href="#" class="btn" style="background-color:#2196F3;">Try it Yourself »</a>
+        <h2>Easy & Secure Online Transactions</h2>
+        <p>Learn to perform online banking transactions easily and securely.</p>
+        <pre><code>&lt;!-- Example: Making a secure banking request --&gt;
+&lt;form action="/transfer" method="POST"&gt;
+  &lt;label for="account"&gt;Transfer To Account:&lt;/label&gt;
+  &lt;input type="text" id="account" name="account" required /&gt;
+  &lt;label for="amount"&gt;Amount:&lt;/label&gt;
+  &lt;input type="number" id="amount" name="amount" required min="1" /&gt;
+  &lt;button type="submit"&gt;Transfer Funds&lt;/button&gt;
+&lt;/form&gt;
+</code></pre>
+        <a href="#" class="btn" style="background-color:#0073e6;">Try It Yourself &raquo;</a>
       </section>
 
-      <section id="html-examples">
-        <h2>HTML Examples</h2>
-        <p>Try some quick examples and improve your HTML skills.</p>
+      <section id="banking-examples">
+        <h2>Siinqee Bank Examples</h2>
+        <p>Explore examples of services like mobile deposits, loan applications, and more.</p>
         <div class="card">
-          <strong>W3Schools Certification Course</strong>
-          <p>Get certified by completing the HTML course.</p>
-          <button class="btn" style="background-color:#fa8323;" onclick="alert('Go to Certification')">Get Certified</button>
+          <strong>Siinqee Bank Certification Program</strong>
+          <p>Complete our online certification to become an expert in Siinqee’s digital banking.</p>
+          <button class="btn" style="background-color:#fa8323;" onclick="alert('Get Certified Now')">Get Certified</button>
         </div>
       </section>
 
-      <section id="html-exercises">
-        <h2>HTML Exercises</h2>
-        <p>Practice what you have learned by answering simple questions.</p>
-        <button class="btn" onclick="alert('Start Exercises')">Start Exercises</button>
+      <section id="banking-exercises">
+        <h2>Practice Secure Banking</h2>
+        <p>Try exercises to familiarize yourself with secure banking practices and features.</p>
+        <button class="btn" onclick="alert('Start Practice Exercises')">Start Exercises</button>
       </section>
 
-      <section id="html-quiz-test">
-        <h2>HTML Quiz Test</h2>
-        <p>Learn interactive quizzes and test your knowledge.</p>
-        <button class="btn" onclick="alert('Start Quiz')">Start Quiz</button>
-        <div class="progress-container" aria-label="Quiz progress">
-          <div class="progress-bar" style="width:40%;"></div>
+      <section id="banking-quiz">
+        <h2>Siinqee Bank Security Quiz</h2>
+        <p>Test your knowledge on online banking safety and best practices.</p>
+        <button class="btn" onclick="alert('Commence Quiz')">Start Quiz</button>
+        <div class="progress-container" aria-label="Quiz progress bar">
+          <div class="progress-bar" style="width: 50%;"></div>
         </div>
       </section>
 
-      <section id="html-references">
-        <h2>HTML References</h2>
-        <p>HTML references, tags, attributes, events, and more.</p>
-        <table role="table" style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+      <section id="banking-references">
+        <h2>Banking References</h2>
+        <p>Learn more about banking terms, security policies, and transaction types.</p>
+        <table role="table" aria-label="Banking references table">
           <thead>
             <tr>
-              <th style="border-bottom: 2px solid #ddd; text-align:left; padding:8px;">Category</th>
-              <th style="border-bottom: 2px solid #ddd; text-align:left; padding:8px;">Examples</th>
+              <th>Category</th>
+              <th>Description</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td style="border-bottom: 1px solid #eee; padding:8px;">HTML Tags</td>
-              <td style="border-bottom: 1px solid #eee; padding:8px;"><a href="#">Tag Reference</a></td>
+              <td>Account Types</td>
+              <td><a href="#">Savings, Checking, Fixed Deposits</a></td>
             </tr>
             <tr>
-              <td style="border-bottom: 1px solid #eee; padding:8px;">Attributes</td>
-              <td style="border-bottom: 1px solid #eee; padding:8px;"><a href="#">Attribute Reference</a></td>
+              <td>Security Protocols</td>
+              <td><a href="#">Two-Factor Authentication, Encryption</a></td>
             </tr>
             <tr>
-              <td style="border-bottom: 1px solid #eee; padding:8px;">Event Handlers</td>
-              <td style="border-bottom: 1px solid #eee; padding:8px;"><a href="#">Event Reference</a></td>
+              <td>Transaction Methods</td>
+              <td><a href="#">Mobile Deposit, Wire Transfer, Online Bill Pay</a></td>
             </tr>
           </tbody>
         </table>
       </section>
 
-      <section id="kickstart-career" class="card" style="text-align:center; background-color:#222; color:#eee;">
-        <h2>Kickstart your career</h2>
-        <p>Get certified by completing the HTML course</p>
-        <button class="btn" style="background-color:#4CAF50;">Start HTML Certification</button>
+      <section id="kickstart-career" class="card" style="text-align: center; background: #04AA6D; color: white;">
+        <h2>Secure Your Financial Future</h2>
+        <p>Empower yourself with Siinqee Bank’s financial education courses and certification.</p>
+        <button class="btn" style="background: white; color: #04AA6D;" onclick="alert('Join Education Program')">Join Now</button>
       </section>
 
-      <section id="video-tutorial" style="text-align:center; margin-top:40px;">
-        <h2>Video HTML for beginners</h2>
-        <img src="https://i.imgur.com/Iy4YV8B.png" alt="HTML for Beginners YouTube thumbnail" class="inline-image" />
-        <p>Learn HTML basics from our video tutorial.</p>
-      </section>
+      <section id="footer-ads" class="ad-placeholder" style="height:90px;">Advertisement</section>
 
-      <section id="footer-ads" class="ad-placeholder" style="height:90px;">Ad Placeholder Bottom</section>
     </main>
   </div>
+
+  <!-- FOOTER -->
+  <footer class="footer" role="contentinfo">
+    <div class="col">
+      <a href="#">About Siinqee</a>
+      <a href="#">Contact Us</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+    </div>
+    <div class="col">
+      <a href="#">Help Center</a>
+      <a href="#">Careers</a>
+      <a href="#">Security</a>
+      <a href="#">Blog</a>
+    </div>
+    <div class="col">
+      <a href="#">Mobile Banking</a>
+      <a href="#">Investments</a>
+      <a href="#">Loans</a>
+      <a href="#">Insurance</a>
+    </div>
+    <div class="copyright">© 2025 Siinqee Bank</div>
+  </footer>
+
+  <script>
+    const sidebar = document.querySelector('nav.sidebar');
+    const toggleBtn = document.querySelector('button.toggle-sidebar');
+
+    toggleBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('minimized');
+      // Adjust aria-expanded on toggle button for accessibility
+      const expanded = sidebar.classList.contains('minimized') ? 'false' : 'true';
+      toggleBtn.setAttribute('aria-expanded', expanded);
+    });
+  </script>
+
 </body>
 </html>
