@@ -1,3 +1,23 @@
+Okay, I will update the HTML provided according to your instructions.
+
+Here are the key changes I will make:
+
+Header Styling: The header background will be changed to white, and the "Siinqee Bank" logo text will be styled in green (#04AA6D). The box shadow will be kept.
+
+Sidebar Styling: The sidebar background will be changed to white. The text colors for links and headings will be kept as they are (dark grey/black), with active/hover links in green (#04AA6D).
+
+Remove Sidebar Toggle Functionality:
+
+The hamburger menu button (<button class="toggle-sidebar">) will be removed from the header.
+
+The JavaScript code responsible for toggling the sidebar's minimized state will be removed.
+
+All CSS rules related to the .minimized sidebar state (e.g., nav.sidebar.minimized, styles for icons in minimized view) will be removed, ensuring the sidebar remains fully expanded.
+
+Content and Structure: The main content, including the video/tutorial section at the top, banking-related text, "Siinqee Bank" branding, fonts, spacing, buttons, and ad placeholders, will be preserved as in your provided HTML. The responsive behavior where the sidebar is hidden on smaller screens will also be maintained.
+
+Here is the updated index.html:
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,33 +50,26 @@
 
     /* Header (top bar) */
     header.header {
-      background-color: #04AA6D;
-      color: white;
+      background-color: #fff; /* MODIFIED: Changed from #04AA6D to white */
+      color: #333; /* MODIFIED: Default text color for header */
       padding: 12px 20px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: flex-start; /* MODIFIED: Was space-between, changed as toggle button removed */
       font-size: 18px;
       height: 48px;
       user-select: none;
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15); /* Kept shadow, can be changed to border-bottom if preferred */
     }
     header.header .logo {
       font-weight: 700;
       font-size: 20px;
+      color: #04AA6D; /* ADDED: Ensure logo is green */
     }
-    header.header button.toggle-sidebar {
-      background: none;
-      border: none;
-      color: white;
-      font-size: 24px;
-      cursor: pointer;
-      line-height: 1;
-      user-select: none;
-    }
+    /* REMOVED: header.header button.toggle-sidebar styling as button is removed */
 
     /* Container: sidebar + main */
     .container {
@@ -68,24 +81,21 @@
 
     /* Sidebar */
     nav.sidebar {
-      background-color: #f3f3f3;
+      background-color: #fff; /* MODIFIED: Changed from #f3f3f3 to white */
       width: 260px;
       min-width: 260px;
       border-right: 1px solid #ddd;
       display: flex;
       flex-direction: column;
       overflow-y: auto;
-      transition: width 0.3s ease;
+      /* REMOVED: transition: width 0.3s ease; (related to minimization) */
     }
-    nav.sidebar.minimized {
-      width: 60px;
-      min-width: 60px;
-    }
+    /* REMOVED: nav.sidebar.minimized and related styles */
 
     nav.sidebar h2 {
       font-size: 18px;
       padding: 20px 15px 15px 15px;
-      color: #333;
+      color: #333; /* Kept as is */
       font-weight: 700;
       white-space: nowrap;
       overflow: hidden;
@@ -103,38 +113,21 @@
       padding: 12px 20px;
     }
     nav.sidebar ul li:hover {
-      background-color: #dff0e8;
+      background-color: #dff0e8; /* Kept as is */
     }
     nav.sidebar ul li a {
-      color: #111;
+      color: #111; /* Kept as is */
       font-weight: 600;
       display: block;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      transition: color 0.2s ease;
     }
-    nav.sidebar.minimized ul li a {
-      text-align: center;
-      padding: 0;
-      font-size: 24px;
-      display: block;
-    }
+    /* REMOVED: Styles for nav.sidebar.minimized ul li a and data-icon related styles as minimization is removed */
+
     nav.sidebar ul li a.active,
     nav.sidebar ul li a:hover {
-      color: #04AA6D;
-    }
-
-    /* Sidebar icons for minimized mode (replace with Unicode icons for demo) */
-    nav.sidebar.minimized ul li a[data-icon]:before {
-      content: attr(data-icon);
-      display: inline-block;
-      margin-right: 0;
-      font-weight: 700;
-    }
-    nav.sidebar.minimized h2 {
-      padding-left: 0;
-      text-align: center;
+      color: #04AA6D; /* Kept as is */
     }
 
     /* Scrollbar styling */
@@ -327,9 +320,7 @@
       nav.sidebar {
         display: none;
       }
-      header.header button.toggle-sidebar {
-        display: none;
-      }
+      /* REMOVED: header.header button.toggle-sidebar { display: none; } as button is removed */
       main.content {
         padding: 20px;
       }
@@ -346,7 +337,7 @@
   <!-- HEADER -->
   <header class="header" role="banner">
     <div class="logo" aria-label="Siinqee Bank Logo">Siinqee Bank</div>
-    <button class="toggle-sidebar" aria-label="Toggle Sidebar" title="Toggle Sidebar">&#9776;</button>
+    <!-- REMOVED: Toggle Sidebar Button -->
   </header>
 
   <!-- CONTAINER -->
@@ -387,16 +378,16 @@
       <section id="easy-learning">
         <h2>Easy & Secure Online Transactions</h2>
         <p>Learn to perform online banking transactions easily and securely.</p>
-        <pre><code>&lt;!-- Example: Making a secure banking request --&gt;
-&lt;form action="/transfer" method="POST"&gt;
-  &lt;label for="account"&gt;Transfer To Account:&lt;/label&gt;
-  &lt;input type="text" id="account" name="account" required /&gt;
-  &lt;label for="amount"&gt;Amount:&lt;/label&gt;
-  &lt;input type="number" id="amount" name="amount" required min="1" /&gt;
-  &lt;button type="submit"&gt;Transfer Funds&lt;/button&gt;
-&lt;/form&gt;
+        <pre><code><!-- Example: Making a secure banking request -->
+<form action="/transfer" method="POST">
+  <label for="account">Transfer To Account:</label>
+  <input type="text" id="account" name="account" required />
+  <label for="amount">Amount:</label>
+  <input type="number" id="amount" name="amount" required min="1" />
+  <button type="submit">Transfer Funds</button>
+</form>
 </code></pre>
-        <a href="#" class="btn" style="background-color:#0073e6;">Try It Yourself &raquo;</a>
+        <a href="#" class="btn" style="background-color:#0073e6;">Try It Yourself »</a>
       </section>
 
       <section id="banking-examples">
@@ -485,17 +476,7 @@
     <div class="copyright">© 2025 Siinqee Bank</div>
   </footer>
 
-  <script>
-    const sidebar = document.querySelector('nav.sidebar');
-    const toggleBtn = document.querySelector('button.toggle-sidebar');
-
-    toggleBtn.addEventListener('click', () => {
-      sidebar.classList.toggle('minimized');
-      // Adjust aria-expanded on toggle button for accessibility
-      const expanded = sidebar.classList.contains('minimized') ? 'false' : 'true';
-      toggleBtn.setAttribute('aria-expanded', expanded);
-    });
-  </script>
+  <!-- REMOVED: JavaScript for sidebar toggle -->
 
 </body>
 </html>
