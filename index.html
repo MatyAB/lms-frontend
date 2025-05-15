@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Siinqee Bank - Online Banking Tutorial</title>
+  <title>Siinqee Bank - HTML Tutorial</title>
   <style>
     /* Reset & base */
     * {
@@ -12,7 +12,7 @@
     body, html {
       margin: 0;
       padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
+      font-family: Arial, Helvetica, sans-serif; /* W3S uses Segoe UI, Arial, sans-serif. Keeping Arial for simplicity */
       background: #fff;
       color: #333;
       height: 100%;
@@ -21,103 +21,239 @@
       min-height: 100vh;
     }
     a {
-      color: #04AA6D;
+      color: #04AA6D; /* Default link color green */
       text-decoration: none;
     }
     a:hover {
       text-decoration: underline;
     }
 
-    /* Header (top bar) */
-    header.header {
-      background-color: #fff; /* MODIFIED: Changed from #04AA6D to white */
-      color: #333; /* MODIFIED: Default text color for header */
-      padding: 12px 20px;
+    /* W3S Style Top Navigation */
+    .w3s-top-nav {
+      background-color: #fff;
+      color: #000;
+      padding: 0 16px;
+      height: 50px;
       display: flex;
       align-items: center;
-      justify-content: flex-start; /* MODIFIED: Was space-between, changed as toggle button removed */
-      font-size: 18px;
-      height: 48px;
-      user-select: none;
+      border-bottom: 1px solid #f1f1f1;
       position: sticky;
       top: 0;
+      z-index: 101; /* Higher than sub-nav */
+    }
+    .w3s-top-nav .logo img {
+      height: 30px; /* Adjust as needed for siinqee.png */
+      vertical-align: middle;
+    }
+    .w3s-top-nav .nav-links {
+      margin-left: 15px;
+    }
+    .w3s-top-nav .nav-links a {
+      color: #000;
+      padding: 15px 10px;
+      font-size: 15px;
+    }
+    .w3s-top-nav .nav-links a:hover {
+      background-color: #04AA6D;
+      color: #fff;
+      text-decoration: none;
+    }
+    .w3s-top-nav .nav-right {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+    }
+    .w3s-top-nav .search-container input[type="text"] {
+      padding: 6px 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 25px;
+      width: 180px;
+    }
+    .w3s-top-nav .icon-button {
+      color: #000;
+      font-size: 18px;
+      padding: 0 12px;
+      cursor: pointer;
+    }
+    .w3s-top-nav .icon-button:hover {
+        color: #04AA6D;
+    }
+    .w3s-top-nav .btn-signin {
+      background-color: #04AA6D;
+      color: white;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 25px;
+      font-size: 14px;
+      font-weight: 600;
+      margin-left: 10px;
+      cursor: pointer;
+    }
+    .w3s-top-nav .btn-signin:hover {
+      background-color: #039860;
+    }
+
+    /* W3S Style Sub Navigation */
+    .w3s-sub-nav {
+      background-color: #282A35; /* Dark grey from W3S */
+      color: #fff;
+      padding: 0 10px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      position: sticky;
+      top: 50px; /* Below top-nav */
       z-index: 100;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15); /* Kept shadow, can be changed to border-bottom if preferred */
     }
-    header.header .logo {
-      font-weight: 700;
-      font-size: 20px;
-      color: #04AA6D; /* ADDED: Ensure logo is green */
+    .w3s-sub-nav .sidebar-toggle-btn { /* New hamburger button */
+      background: none;
+      border: none;
+      color: white;
+      font-size: 22px;
+      cursor: pointer;
+      padding: 0 12px;
+      line-height: 1;
     }
-    /* REMOVED: header.header button.toggle-sidebar styling as button is removed */
+    .w3s-sub-nav .sidebar-toggle-btn:hover {
+        background-color: #000;
+    }
+    .w3s-sub-nav a {
+      color: #f1f1f1;
+      padding: 10px 12px;
+      font-size: 14px;
+      text-decoration: none;
+    }
+    .w3s-sub-nav a:hover {
+      background-color: #000;
+      color: #fff;
+    }
+    .w3s-sub-nav a.active {
+      background-color: #04AA6D;
+      color: #fff;
+    }
+
+    /* Ad Placeholder below sub-nav */
+    .content-ad-placeholder {
+      background: #f1f1f1; /* Light grey for ad background */
+      text-align: center;
+      padding: 15px;
+      font-size: 14px;
+      color: #555;
+      border-bottom: 1px solid #ddd;
+      margin-bottom: 1px; /* To make it appear connected to container border */
+    }
+
 
     /* Container: sidebar + main */
     .container {
       flex-grow: 1;
       display: flex;
-      overflow: hidden;
+      overflow: hidden; /* Important for internal scrolling */
       background: white;
+      border-top: 1px solid #ddd; /* Add a top border if ad placeholder isn't there or visually distinct */
     }
 
-    /* Sidebar */
+    /* Sidebar (Banking Sidebar) */
     nav.sidebar {
-      background-color: #fff; /* MODIFIED: Changed from #f3f3f3 to white */
+      background-color: #fff;
       width: 260px;
       min-width: 260px;
       border-right: 1px solid #ddd;
       display: flex;
       flex-direction: column;
       overflow-y: auto;
-      /* REMOVED: transition: width 0.3s ease; (related to minimization) */
+      transition: width 0.3s ease, min-width 0.3s ease; /* Added transition */
     }
-    /* REMOVED: nav.sidebar.minimized and related styles */
-
+    nav.sidebar.minimized { /* Styles for minimized sidebar */
+      width: 60px;
+      min-width: 60px;
+    }
     nav.sidebar h2 {
       font-size: 18px;
       padding: 20px 15px 15px 15px;
-      color: #333; /* Kept as is */
+      color: #333;
       font-weight: 700;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      transition: padding 0.3s ease, font-size 0.3s ease;
     }
-
+    nav.sidebar.minimized h2 {
+        font-size: 0; /* Hide text */
+        padding: 20px 0 15px 0;
+        text-align: center;
+    }
+    nav.sidebar.minimized h2::before {
+        content: "SB"; /* Abbreviation for Siinqee Bank */
+        font-size: 18px;
+        font-weight: 700;
+        color: #04AA6D;
+    }
     nav.sidebar ul {
       list-style-type: none;
       padding-left: 0;
       margin: 0;
       flex-grow: 1;
     }
-
     nav.sidebar ul li {
-      padding: 12px 20px;
-    }
-    nav.sidebar ul li:hover {
-      background-color: #dff0e8; /* Kept as is */
+      padding: 0; /* Remove li padding, apply to a */
     }
     nav.sidebar ul li a {
-      color: #111; /* Kept as is */
+      color: #111;
       font-weight: 600;
       display: block;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      padding: 12px 20px; /* Padding on 'a' tag */
+      position: relative; /* For icon positioning */
     }
-    /* REMOVED: Styles for nav.sidebar.minimized ul li a and data-icon related styles as minimization is removed */
+    nav.sidebar ul li a::before { /* Icon handling */
+        content: attr(data-icon);
+        margin-right: 10px;
+        font-weight: normal; /* Or 700 if icons are bold */
+    }
+    nav.sidebar.minimized ul li a {
+        text-align: center;
+        padding: 12px 0; /* Adjusted padding for icon only */
+    }
+    nav.sidebar.minimized ul li a .link-text {
+        display: none; /* Hide text when minimized */
+    }
+    nav.sidebar.minimized ul li a::before {
+        margin-right: 0;
+        font-size: 20px; /* Icon size when minimized */
+        display: inline-block; /* To center it */
+    }
+    nav.sidebar ul li a:hover,
+    nav.sidebar ul li a.active {
+      color: #04AA6D;
+      background-color: #e7f5ef; /* Light green background on hover/active */
+    }
+    nav.sidebar.minimized ul li a:hover,
+    nav.sidebar.minimized ul li a.active {
+      background-color: #d1e7dd; /* Slightly darker green for minimized hover */
+    }
 
-    nav.sidebar ul li a.active,
-    nav.sidebar ul li a:hover {
-      color: #04AA6D; /* Kept as is */
+    /* Sidebar ad placeholders */
+    nav.sidebar .ad-placeholder {
+      background: #eee; border: 1px dashed #bbb; color: #999; text-align: center;
+      font-size: 12px; border-radius: 4px; margin: 15px; user-select: none;
+      line-height: normal; padding: 10px 0;
+    }
+    nav.sidebar.minimized .ad-placeholder {
+        font-size: 0; /* Hide text */
+        height: 50px !important; /* Fixed height for small ad */
+    }
+    nav.sidebar.minimized .ad-placeholder::before {
+        content: "Ad";
+        font-size: 12px;
     }
 
-    /* Scrollbar styling */
-    nav.sidebar::-webkit-scrollbar {
-      width: 8px;
-    }
-    nav.sidebar::-webkit-scrollbar-thumb {
-      background-color: rgba(0,0,0,0.1);
-      border-radius: 4px;
-    }
+    /* Scrollbar styling for banking sidebar */
+    nav.sidebar::-webkit-scrollbar { width: 8px; }
+    nav.sidebar::-webkit-scrollbar-thumb { background-color: rgba(0,0,0,0.1); border-radius: 4px; }
 
     /* Main content */
     main.content {
@@ -126,220 +262,173 @@
       padding: 20px 40px;
       background-color: #fff;
       color: #222;
-      display: flex;
-      flex-direction: column;
-      min-height: 0;
+    }
+    /* Main Content Header (HTML Tutorial title and Home/Next buttons) */
+    .main-content-header {
+        margin-bottom: 20px;
+    }
+    .main-content-header h1 {
+        font-size: 36px; /* Large title like W3S */
+        font-weight: 700;
+        color: #282A35; /* Dark title */
+        margin: 0 0 15px 0;
+    }
+    .page-nav-buttons a.btn { /* Re-styling for green Home/Next buttons */
+        background-color: #04AA6D;
+        color: white;
+        font-weight: 600;
+        padding: 10px 20px;
+        border-radius: 5px; /* W3S buttons are slightly rounded */
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        margin-right: 10px;
+        text-decoration: none;
+    }
+    .page-nav-buttons a.btn:hover {
+        background-color: #039860;
+        text-decoration: none;
+    }
+    main.content hr {
+        border: 0;
+        border-top: 1px solid #eee;
+        margin: 30px 0;
     }
 
-    /* Sections */
-    section {
-      margin-bottom: 40px;
-      max-width: 900px;
-      width: 100%;
+    /* Sections (Existing banking content) */
+    section { margin-bottom: 40px; max-width: 900px; width: 100%; }
+    section h2 { font-weight: 700; font-size: 28px; margin-bottom: 16px; color: #04AA6D; }
+    section p, section li { font-size: 16px; line-height: 1.6; color: #444; }
+    .btn { /* General button style from original Siinqee content */
+      display: inline-block; background-color: #04AA6D; color: white; font-weight: 600;
+      padding: 10px 20px; border-radius: 4px; border: none; cursor: pointer;
+      user-select: none; font-size: 16px; transition: background-color 0.3s ease;
+      margin-top: 15px; text-align: center; text-decoration: none;
     }
-    section h2 {
-      font-weight: 700;
-      font-size: 28px;
-      margin-bottom: 16px;
-      color: #04AA6D;
+    .btn:hover { background-color: #038c56; text-decoration: none; }
+    pre { background-color: #f4f4f4; border: 1px solid #ddd; border-radius: 4px; padding: 15px 20px;
+          overflow-x: auto; font-family: 'Courier New', Courier, monospace; font-size: 14px;
+          margin: 12px 0; white-space: pre-wrap; }
+    table { border-collapse: collapse; width: 100%; margin-top: 15px; }
+    th, td { border: 1px solid #ccc; padding: 10px 15px; text-align: left; }
+    th { background-color: #e7f5ef; }
+    .progress-container { margin-top: 15px; background: #ddd; border-radius: 20px; overflow: hidden; width: 100%; height: 20px; }
+    .progress-bar { height: 100%; background-color: #04AA6D; width: 40%; transition: width 0.3s ease; }
+    .card { background-color: #f9f9f9; border-radius: 5px; border: 1px solid #ddd; padding: 20px; margin-bottom: 20px; }
+    main.content .ad-placeholder { /* Ad placeholder inside main content */
+      background: #eee; border: 2px dashed #bbb; color: #999; text-align: center;
+      line-height: 50px; font-size: 14px; border-radius: 6px; margin: 20px 0; user-select: none;
     }
-    section p, section li {
-      font-size: 16px;
-      line-height: 1.6;
-      color: #444;
-    }
+    #video-tutorial img { max-width: 100%; border-radius: 6px; box-shadow: 0 0 8px rgba(0,0,0,0.1); cursor: pointer;
+                        max-height: 320px; object-fit: cover; user-select: none; border: 1px solid #ccc; }
+    #video-tutorial h2 { margin-top: 0; margin-bottom: 12px; } /* Adjusting from original banking tutorial section title */
+    #video-tutorial p { font-size: 16px; color: #555; margin-bottom: 0; }
 
-    /* Buttons */
-    .btn {
-      display: inline-block;
-      background-color: #04AA6D;
-      color: white;
-      font-weight: 600;
-      padding: 10px 20px;
-      border-radius: 4px;
-      border: none;
-      cursor: pointer;
-      user-select: none;
-      font-size: 16px;
-      transition: background-color 0.3s ease;
-      margin-top: 15px;
-      text-align: center;
-      text-decoration: none;
-    }
-    .btn:hover {
-      background-color: #038c56;
-    }
 
-    /* Code blocks */
-    pre {
-      background-color: #f4f4f4;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      padding: 15px 20px;
-      overflow-x: auto;
-      font-family: 'Courier New', Courier, monospace;
-      font-size: 14px;
-      margin-top: 12px;
-      margin-bottom: 12px;
-      white-space: pre-wrap;
-    }
-    
-    /* Table Styling */
-    table {
-      border-collapse: collapse;
-      width: 100%;
-      margin-top: 15px;
-    }
-    th, td {
-      border: 1px solid #ccc;
-      padding: 10px 15px;
-      text-align: left;
-    }
-    th {
-      background-color: #e7f5ef;
-    }
-    
-    /* Quiz progress bar */
-    .progress-container {
-      margin-top: 15px;
-      background: #ddd;
-      border-radius: 20px;
-      overflow: hidden;
-      width: 100%;
-      height: 20px;
-    }
-    .progress-bar {
-      height: 100%;
-      background-color: #04AA6D;
-      width: 40%;  /* example */
-      transition: width 0.3s ease;
-    }
-    
-    /* Cards */
-    .card {
-      background-color: #f9f9f9;
-      border-radius: 5px;
-      border: 1px solid #ddd;
-      padding: 20px;
-      margin-bottom: 20px;
-    }
-
-    /* Ad placeholders */
-    .ad-placeholder {
-      background: #eee;
-      border: 2px dashed #bbb;
-      color: #999;
-      text-align: center;
-      line-height: 50px;
-      font-size: 14px;
-      border-radius: 6px;
-      margin: 20px 0;
-      user-select: none;
-    }
-
-    /* Video preview area on top */
-    #video-tutorial {
-      text-align: center;
-      margin-bottom: 50px;
-    }
-    #video-tutorial img {
-      max-width: 100%;
-      border-radius: 6px;
-      box-shadow: 0 0 8px rgba(0,0,0,0.1);
-      cursor: pointer;
-      max-height: 320px;
-      object-fit: cover;
-      user-select: none;
-      border: 1px solid #ccc;
-    }
-    #video-tutorial h2 {
-      margin-top: 24px;
-      margin-bottom: 12px;
-      color: #04AA6D;
-    }
-    #video-tutorial p {
-      font-size: 16px;
-      color: #555;
-      margin-bottom: 0;
-    }
-
-    /* Footer (bottom bar) */
+    /* Footer */
     footer.footer {
-      background-color: #222;
-      color: #bbb;
-      font-size: 14px;
-      padding: 20px 40px;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 15px;
-      user-select: none;
+      background-color: #222; color: #bbb; font-size: 14px; padding: 20px 40px;
+      display: flex; flex-wrap: wrap; justify-content: space-between; gap: 15px; user-select: none;
     }
-    footer.footer a {
-      color: #04AA6D;
-      text-decoration: none;
-      margin-right: 20px;
-      white-space: nowrap;
-    }
-    footer.footer a:hover {
-      text-decoration: underline;
-    }
-    footer.footer .col {
-      min-width: 120px;
-      flex-grow: 1;
-    }
-    footer.footer .copyright {
-      flex-basis: 100%;
-      text-align: center;
-      margin-top: 12px;
-      color: #777;
-    }
+    footer.footer a { color: #04AA6D; margin-right: 20px; white-space: nowrap; }
+    footer.footer .col { min-width: 120px; flex-grow: 1; }
+    footer.footer .copyright { flex-basis: 100%; text-align: center; margin-top: 12px; color: #777; }
 
     /* Responsive for smaller windows */
     @media (max-width: 860px) {
-      nav.sidebar {
+      nav.sidebar { /* Banking sidebar hidden on small screens */
         display: none;
       }
-      /* REMOVED: header.header button.toggle-sidebar { display: none; } as button is removed */
-      main.content {
-        padding: 20px;
+      .w3s-sub-nav .sidebar-toggle-btn { /* Ensure toggle is still there if needed, or hide sub-nav too */
+        /* display: none; If we want to hide W3S sub-nav on mobile too and use a different mobile nav */
       }
-      footer.footer {
-        padding: 20px;
-        justify-content: center;
-        gap: 10px;
-      }
+      main.content { padding: 20px; }
+      footer.footer { padding: 20px; justify-content: center; }
+      .w3s-top-nav .nav-links a { font-size: 14px; padding: 15px 5px;}
+      .w3s-top-nav .search-container input[type="text"] { width: 120px; }
     }
+    @media (max-width: 600px) {
+        .w3s-top-nav .nav-links { display: none; } /* Hide text links on very small screens */
+        .w3s-sub-nav a { padding: 10px 6px; font-size: 13px; }
+        .main-content-header h1 { font-size: 28px; }
+        .page-nav-buttons a.btn { font-size: 14px; padding: 8px 15px;}
+    }
+
   </style>
 </head>
 <body>
 
-  <!-- HEADER -->
-  <header class="header" role="banner">
-    <div class="logo" aria-label="Siinqee Bank Logo">Siinqee Bank</div>
-    <!-- REMOVED: Toggle Sidebar Button -->
+  <!-- W3S Style Top Navigation -->
+  <header class="w3s-top-nav">
+    <a href="#" class="logo" aria-label="Siinqee Bank Home">
+      <img src="siinqee.png" alt="Siinqee Bank Logo"> <!-- Ensure siinqee.png is available -->
+    </a>
+    <div class="nav-links">
+      <a href="#">Tutorials ▾</a>
+      <a href="#">Exercises ▾</a>
+      <a href="#">Services ▾</a>
+    </div>
+    <div class="nav-right">
+      <div class="search-container">
+        <input type="text" placeholder="Search...">
+        <!-- Add search icon inside or next to input if desired -->
+      </div>
+      <a href="#" class="icon-button" title="Toggle Dark Mode"></a> <!-- Dark mode icon (waning crescent moon) -->
+      <button class="btn-signin">Sign In</button>
+    </div>
   </header>
 
-  <!-- CONTAINER -->
+  <!-- W3S Style Sub Navigation -->
+  <nav class="w3s-sub-nav">
+    <button class="sidebar-toggle-btn" aria-label="Toggle Sidebar" title="Toggle Sidebar">☰</button>
+    <a href="#" class="active">HTML</a>
+    <a href="#">CSS</a>
+    <a href="#">JAVASCRIPT</a>
+    <a href="#">SQL</a>
+    <a href="#">PYTHON</a>
+    <a href="#">JAVA</a>
+    <a href="#">PHP</a>
+    <a href="#">HOW TO</a>
+    <a href="#">W3.CSS</a>
+    <a href="#">C</a>
+    <a href="#">C++</a>
+    <!-- Add more links as needed -->
+  </nav>
+
+  <!-- Ad Placeholder -->
+  <div class="content-ad-placeholder">
+    Your Guide To Siinqee Bank Online Services - Learn More & Manage Effectively! (Advertisement)
+  </div>
+
+  <!-- CONTAINER for Banking Sidebar and Main Content -->
   <div class="container" role="main">
 
-    <!-- SIDEBAR -->
-    <nav class="sidebar" aria-label="Primary Navigation">
+    <!-- Banking SIDEBAR -->
+    <nav class="sidebar" aria-label="Primary Banking Navigation">
       <h2>Siinqee Bank</h2>
       <ul>
-        <li><a href="#" class="active" data-icon="🏠" title="Home">Home</a></li>
-        <li><a href="#" data-icon="💳" title="Accounts & Cards">Accounts & Cards</a></li>
-        <li><a href="#" data-icon="📊" title="Investments">Investments</a></li>
-        <li><a href="#" data-icon="📞" title="Customer Support">Customer Support</a></li>
-        <li><a href="#" data-icon="📰" title="Latest Offers">Latest Offers</a></li>
-        <li><a href="#" data-icon="🎓" title="Banking Education">Education</a></li>
+        <li><a href="#" class="active" data-icon="🏠" title="Home"><span class="link-text">Home</span></a></li>
+        <li><a href="#" data-icon="💳" title="Accounts & Cards"><span class="link-text">Accounts & Cards</span></a></li>
+        <li><a href="#" data-icon="📊" title="Investments"><span class="link-text">Investments</span></a></li>
+        <li><a href="#" data-icon="📞" title="Customer Support"><span class="link-text">Customer Support</span></a></li>
+        <li><a href="#" data-icon="📰" title="Latest Offers"><span class="link-text">Latest Offers</span></a></li>
+        <li><a href="#" data-icon="🎓" title="Banking Education"><span class="link-text">Education</span></a></li>
       </ul>
       <div class="ad-placeholder" style="height:90px;">Advertisement</div>
       <div class="ad-placeholder" style="height:250px;">Advertisement</div>
     </nav>
 
-    <!-- MAIN CONTENT -->
+    <!-- MAIN CONTENT (Banking Tutorial) -->
     <main class="content" tabindex="0" aria-label="Main content area">
+
+      <div class="main-content-header">
+        <h1>HTML Tutorial</h1>
+        <div class="page-nav-buttons">
+          <a href="#" class="btn btn-home">< Home</a>
+          <a href="#" class="btn btn-next">Next ></a>
+        </div>
+      </div>
+      <hr>
 
       <!-- Video Section on top -->
       <section id="video-tutorial">
@@ -399,25 +488,11 @@
         <h2>Banking References</h2>
         <p>Learn more about banking terms, security policies, and transaction types.</p>
         <table role="table" aria-label="Banking references table">
-          <thead>
-            <tr>
-              <th>Category</th>
-              <th>Description</th>
-            </tr>
-          </thead>
+          <thead> <tr> <th>Category</th> <th>Description</th> </tr> </thead>
           <tbody>
-            <tr>
-              <td>Account Types</td>
-              <td><a href="#">Savings, Checking, Fixed Deposits</a></td>
-            </tr>
-            <tr>
-              <td>Security Protocols</td>
-              <td><a href="#">Two-Factor Authentication, Encryption</a></td>
-            </tr>
-            <tr>
-              <td>Transaction Methods</td>
-              <td><a href="#">Mobile Deposit, Wire Transfer, Online Bill Pay</a></td>
-            </tr>
+            <tr> <td>Account Types</td> <td><a href="#">Savings, Checking, Fixed Deposits</a></td> </tr>
+            <tr> <td>Security Protocols</td> <td><a href="#">Two-Factor Authentication, Encryption</a></td> </tr>
+            <tr> <td>Transaction Methods</td> <td><a href="#">Mobile Deposit, Wire Transfer, Online Bill Pay</a></td> </tr>
           </tbody>
         </table>
       </section>
@@ -428,35 +503,32 @@
         <button class="btn" style="background: white; color: #04AA6D;" onclick="alert('Join Education Program')">Join Now</button>
       </section>
 
-      <section id="footer-ads" class="ad-placeholder" style="height:90px;">Advertisement</section>
+      <section class="ad-placeholder" style="height:90px;">Advertisement Bottom</section>
 
     </main>
   </div>
 
   <!-- FOOTER -->
   <footer class="footer" role="contentinfo">
-    <div class="col">
-      <a href="#">About Siinqee</a>
-      <a href="#">Contact Us</a>
-      <a href="#">Privacy Policy</a>
-      <a href="#">Terms of Service</a>
-    </div>
-    <div class="col">
-      <a href="#">Help Center</a>
-      <a href="#">Careers</a>
-      <a href="#">Security</a>
-      <a href="#">Blog</a>
-    </div>
-    <div class="col">
-      <a href="#">Mobile Banking</a>
-      <a href="#">Investments</a>
-      <a href="#">Loans</a>
-      <a href="#">Insurance</a>
-    </div>
+    <div class="col"> <a href="#">About Siinqee</a> <a href="#">Contact Us</a> <a href="#">Privacy Policy</a> <a href="#">Terms of Service</a> </div>
+    <div class="col"> <a href="#">Help Center</a> <a href="#">Careers</a> <a href="#">Security</a> <a href="#">Blog</a> </div>
+    <div class="col"> <a href="#">Mobile Banking</a> <a href="#">Investments</a> <a href="#">Loans</a> <a href="#">Insurance</a> </div>
     <div class="copyright">© 2025 Siinqee Bank</div>
   </footer>
 
-  <!-- REMOVED: JavaScript for sidebar toggle -->
+  <script>
+    const bankingSidebar = document.querySelector('nav.sidebar'); // Target the banking sidebar
+    const toggleBtnW3S = document.querySelector('.w3s-sub-nav .sidebar-toggle-btn'); // Button in W3S sub-nav
+
+    if (toggleBtnW3S && bankingSidebar) {
+      toggleBtnW3S.addEventListener('click', () => {
+        bankingSidebar.classList.toggle('minimized');
+        // Adjust aria-expanded on toggle button for accessibility
+        const expanded = bankingSidebar.classList.contains('minimized') ? 'false' : 'true';
+        toggleBtnW3S.setAttribute('aria-expanded', expanded);
+      });
+    }
+  </script>
 
 </body>
 </html>
